@@ -26,24 +26,24 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput
 		LastName:  input.LastName,
 		FullName:  fmt.Sprintf("%s %s", input.FirstName, input.LastName),
 	}
-	r.users = append(r.users, user)
+	r.UserList = append(r.UserList, user)
 	return user, nil
 }
 
 // DeleteUser is the resolver for the deleteUser field.
 func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (bool, error) {
-	for i, user := range r.users {
+	for i, user := range r.UserList {
 		if user.ID == id {
-			r.users = append(r.users[:i], r.users[i+1:]...)
+			r.UserList = append(r.UserList[:i], r.UserList[i+1:]...)
 			return true, nil
 		}
 	}
 	return false, errors.New(fmt.Sprintf("Failed to find user %s", id))
 }
 
-// Users is the resolver for the users field.
+// Users is the resolver for the Users field.
 func (r *queryResolver) Users(ctx context.Context, firstName *string, orderByEmail *bool) ([]*model.User, error) {
-	users := r.users
+	users := r.UserList
 	if firstName != nil {
 		var filteredUsers []*model.User
 		for _, user := range users {

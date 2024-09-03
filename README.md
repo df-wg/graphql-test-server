@@ -29,6 +29,10 @@ All user data is stored in memory, so it will be lost when the server restarts.
     ```bash
     go mod tidy
     ```
+3. Run tests: 
+   ```bash
+   go test ./...
+   ```
 3. Run server:
     ```bash
     go run server.go
