@@ -1,15 +1,19 @@
 # GraphQL Test Server
 
-This project is a simple GraphQL server built using Go and `gqlgen`. It provides an API to manage users with the following fields:
+This project is a sample project, showing how to run the cosmos router with multiple GraphQL servers. 
 
+The main server (in `user_server`) is a simple GraphQL server built using Go and `gqlgen`. It provides an API to manage users with the following fields:
 - `id`: Unique identifier for the user.
 - `email`: The user's email address.
 - `first_name`: The user's first name.
 - `last_name`: The user's last name.
 - `full_name`: A computed field that concatenates the first name and last name.
 
-## Features
+The second server (in `user_age_server`) is a super simple GraphQL server that extends the model by adding `age`
 
+The third directory (`cosmos_router`) contains the router configuration for running the server
+
+## Features
 - **Query Users**: Fetch a list of users with optional filtering by first name and ordering by email.
 - **Create User**: Add a new user to the list.
 - **Delete User**: Remove a user by their ID.
@@ -33,9 +37,11 @@ All user data is stored in memory, so it will be lost when the server restarts.
    ```bash
    go test ./...
    ```
-3. Run server:
+3. Run all 3 servers at the same time (in 3 tabs):
     ```bash
-    go run server.go
+    go run user_server/server.go
+    go run user_age_server/server.go
+    cd cosmos_router && ./router
     ```
 
 ## Testing the API
@@ -49,6 +55,7 @@ query {
     id
     email
     full_name
+     age
   }
 }
 ```
