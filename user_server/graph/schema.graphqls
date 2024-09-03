@@ -1,0 +1,33 @@
+# GraphQL schema example
+#directive @goModel(model: String, models: [String!]) on OBJECT
+#  | INPUT_OBJECT
+#  | SCALAR
+#  | ENUM
+#  | INTERFACE
+#  | UNION
+#
+directive @goField(forceResolver: Boolean, name: String, omittable: Boolean) on INPUT_FIELD_DEFINITION
+  | FIELD_DEFINITION
+
+type User @key(fields: "id") {
+  id: ID!
+  email: String!
+  first_name: String!
+  last_name: String!
+  full_name: String! @goField(forceResolver: true)
+}
+
+input UserInput {
+  email: String!
+  first_name: String!
+  last_name: String!
+}
+
+type Query {
+  users(first_name: String, orderByEmail: Boolean): [User!]!
+}
+
+type Mutation {
+  createUser(input: UserInput!): User!
+  deleteUser(id: ID!): Boolean!
+}

@@ -1,0 +1,10 @@
+version: 1
+subgraphs:
+  - name: subgraph-a
+    routing_url: http://localhost:8080/query
+    schema:
+      file: ../user_server/graph/schema.graphqls
+  - name: subgraph-b
+    routing_url: http://localhost:8083/query
+    schema:
+      file: ../user_age_server/graph/schema.graphqls
